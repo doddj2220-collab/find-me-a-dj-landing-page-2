@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Me a DJ — Book Trusted DJs Across the UK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest:        #1a3a2a;
+    --forest-deep:   #122a1e;
+    --forest-mid:    #224d38;
+    --forest-light:  #2d6b4a;
+    --forest-pale:   #3a8a5e;
+    --forest-faint:  #4fa070;
+    --white:         #f8f7f3;
+    --off-white:     #efefea;
+    --border:        rgba(26,58,42,0.11);
+    --border-strong: rgba(26,58,42,0.22);
+    --muted:         #7a8c82;
+    --text:          #1a2e22;
+    --text-light:    rgba(26,46,34,0.52);
+    --font-display:  'Bebas Neue', sans-serif;
+    --font-body:     'DM Sans', sans-serif;
+    --font-mono:     'Space Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(248,247,243,0.96);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    letter-spacing: 0.1em;
+    color: var(--forest);
+    text-decoration: none;
+  }
+  .nav-pill {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--forest-pale);
+    border: 1px solid var(--border-strong);
+    padding: 0.38rem 0.95rem;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10rem 2rem 7rem;
+    text-align: center;
+    overflow: hidden;
+    background: var(--forest-deep);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 120%, rgba(45,107,74,0.40) 0%, transparent 58%),
+      radial-gradient(ellipse 35% 35% at 10% 20%,  rgba(45,107,74,0.08) 0%, transparent 55%),
+      radial-gradient(ellipse 28% 28% at 90% 15%,  rgba(45,107,74,0.06) 0%, transparent 55%);
+  }
+
+  /* EQ bars */
+  .visualizer {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 140px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 3px;
+    padding: 0 1rem;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+  .bar {
+    width: 4px;
+    background: linear-gradient(to top, #3a8a5e, transparent);
+    border-radius: 2px 2px 0 0;
+    animation: eq var(--d,1.2s) ease-in-out infinite alternate;
+    transform-origin: bottom;
+  }
+  @keyframes eq {
+    from { transform: scaleY(0.1); }
+    to   { transform: scaleY(1); }
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 780px; }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.26em;
+    color: var(--forest-faint);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: up 0.8s 0.15s forwards;
+  }
+
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 11vw, 9.5rem);
+    line-height: 0.9;
+    letter-spacing: 0.025em;
+    color: var(--white);
+    margin-bottom: 1.8rem;
+    opacity: 0;
+    animation: up 0.8s 0.3s forwards;
+  }
+  .hero-headline em {
+    font-style: normal;
+    color: var(--forest-pale);
+  }
+
+  .hero-sub {
+    font-size: clamp(0.95rem, 1.8vw, 1.12rem);
+    color: rgba(248,247,243,0.52);
+    max-width: 460px;
+    margin: 0 auto 2.5rem;
+    font-weight: 300;
+    line-height: 1.7;
+    opacity: 0;
+    animation: up 0.8s 0.45s forwards;
+  }
+
+  .hero-pills {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: up 0.8s 0.6s forwards;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.42rem;
+    padding: 0.4rem 0.95rem;
+    border: 1px solid rgba(58,138,94,0.35);
+    background: rgba(58,138,94,0.08);
+    color: var(--forest-faint);
+    font-size: 0.69rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+  }
+  .pill-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--forest-pale); flex-shrink: 0; }
+
+  /* scroll cue */
+  .scroll-cue {
+    position: absolute;
+    bottom: 2.2rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    opacity: 0;
+    animation: up 1s 1.2s forwards;
+    z-index: 2;
+  }
+  .scroll-cue span {
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.2em;
+    color: rgba(248,247,243,0.28);
+    text-transform: uppercase;
+  }
+  .scroll-arrow {
+    width: 1px; height: 38px;
+    background: linear-gradient(to bottom, rgba(58,138,94,0.55), transparent);
+    animation: drip 1.7s ease-in-out infinite;
+  }
+  @keyframes drip {
+    0%,100% { transform: scaleY(1); opacity: 0.55; }
+    50%      { transform: scaleY(0.35); opacity: 0.15; }
+  }
+
+  @keyframes up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    background: var(--off-white);
+    border-top: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border-strong);
+    padding: 0.8rem 0;
+    overflow: hidden;
+  }
+  .marquee-track {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker 28s linear infinite;
+  }
+  .m-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.4rem;
+    padding: 0 1.8rem;
+    font-family: var(--font-display);
+    font-size: 0.86rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+  .m-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--forest-pale); flex-shrink: 0; }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how-section {
+    background: var(--off-white);
+    padding: 7rem 3rem;
+  }
+  .how-inner { max-width: 1080px; margin: 0 auto; }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.61rem;
+    letter-spacing: 0.24em;
+    color: var(--forest-pale);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 20px; height: 1px;
+    background: var(--forest-pale);
+  }
+
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+    line-height: 0.94;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+  .section-sub {
+    font-size: 0.92rem;
+    color: var(--text-light);
+    max-width: 420px;
+    margin-bottom: 0;
+    line-height: 1.7;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border-strong);
+    border: 1px solid var(--border-strong);
+    margin-top: 3.5rem;
+  }
+  .step {
+    background: var(--off-white);
+    padding: 2.6rem 2.2rem;
+    position: relative;
+    transition: background 0.22s;
+  }
+  .step:hover { background: var(--white); }
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    color: rgba(26,58,42,0.05);
+    line-height: 1;
+    position: absolute;
+    top: 1.2rem; right: 1.6rem;
+  }
+  .step-icon { font-size: 1.6rem; margin-bottom: 1.3rem; }
+  .step-title {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    letter-spacing: 0.04em;
+    color: var(--forest);
+    margin-bottom: 0.65rem;
+    line-height: 1.05;
+  }
+  .step-desc { color: var(--text-light); font-size: 0.87rem; line-height: 1.72; }
+
+  /* ── SIGNUP SPLIT ── */
+  .signup-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .signup-panel {
+    padding: 5.5rem 4.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .signup-panel.booker {
+    background: var(--forest-deep);
+    color: var(--white);
+  }
+  .signup-panel.dj {
+    background: var(--white);
+    color: var(--text);
+    border-left: 1px solid var(--border-strong);
+  }
+
+  .panel-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .booker .panel-tag { color: var(--forest-pale); }
+  .dj .panel-tag     { color: var(--forest-pale); }
+  .panel-tag::before { content: ''; display: block; width: 16px; height: 1px; background: currentColor; }
+
+  .panel-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 3.8vw, 4rem);
+    line-height: 0.94;
+    letter-spacing: 0.02em;
+    margin-bottom: 1rem;
+  }
+  .booker .panel-heading { color: var(--white); }
+  .dj .panel-heading     { color: var(--forest); }
+  .panel-heading em { font-style: normal; color: var(--forest-pale); }
+
+  .panel-sub {
+    font-size: 0.9rem;
+    line-height: 1.72;
+    margin-bottom: 1.6rem;
+  }
+  .booker .panel-sub { color: rgba(248,247,243,0.48); }
+  .dj .panel-sub     { color: var(--text-light); }
+
+  .benefit-list {
+    list-style: none;
+    margin-bottom: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .benefit-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.86rem;
+  }
+  .booker .benefit-list li { color: rgba(248,247,243,0.65); }
+  .dj .benefit-list li     { color: var(--text-light); }
+  .benefit-list li::before { content: '→'; flex-shrink: 0; font-weight: 700; }
+  .booker .benefit-list li::before { color: var(--forest-pale); }
+  .dj .benefit-list li::before     { color: var(--forest-mid); }
+
+  /* ── FORMSPREE FORM ── */
+  .fs-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* stacked inputs with a shared border */
+  .fs-input {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    font-family: var(--font-body);
+    font-size: 0.87rem;
+    font-weight: 300;
+    outline: none;
+    transition: box-shadow 0.18s;
+    display: block;
+  }
+
+  .booker .fs-input {
+    background: rgba(255,255,255,0.06);
+    color: var(--white);
+    border: 1px solid rgba(248,247,243,0.14);
+    border-bottom: none;
+  }
+  .booker .fs-input:last-of-type { border-bottom: 1px solid rgba(248,247,243,0.14); }
+  .booker .fs-input::placeholder  { color: rgba(248,247,243,0.27); }
+  .booker .fs-input:focus         { box-shadow: inset 0 0 0 1px rgba(58,138,94,0.55); }
+
+  .dj .fs-input {
+    background: var(--off-white);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-bottom: none;
+  }
+  .dj .fs-input:last-of-type { border-bottom: 1px solid var(--border-strong); }
+  .dj .fs-input::placeholder  { color: var(--muted); }
+  .dj .fs-input:focus         { box-shadow: inset 0 0 0 1px var(--forest-pale); }
+
+  /* optional field label */
+  .fs-optional-label {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.2rem 0;
+    display: block;
+  }
+  .booker .fs-optional-label { color: rgba(248,247,243,0.25); background: rgba(255,255,255,0.06); border: 1px solid rgba(248,247,243,0.14); border-top: none; border-bottom: none; }
+  .dj .fs-optional-label     { color: var(--muted); background: var(--off-white); border: 1px solid var(--border-strong); border-top: none; border-bottom: none; }
+
+  .fs-select {
+    width: 100%;
+    padding: 0.7rem 1.2rem 0.9rem;
+    font-family: var(--font-body);
+    font-size: 0.87rem;
+    font-weight: 300;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 1.1rem center;
+    background-size: 10px;
+    transition: box-shadow 0.18s;
+  }
+  .booker .fs-select {
+    background-color: rgba(255,255,255,0.06);
+    color: var(--white);
+    border: 1px solid rgba(248,247,243,0.14);
+    border-top: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(248,247,243,0.3)'/%3E%3C/svg%3E");
+  }
+  .booker .fs-select:focus { box-shadow: inset 0 0 0 1px rgba(58,138,94,0.55); }
+  .booker .fs-select option { background: var(--forest-deep); color: var(--white); }
+
+  .dj .fs-select {
+    background-color: var(--off-white);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-top: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(26,46,34,0.35)'/%3E%3C/svg%3E");
+  }
+  .dj .fs-select:focus { box-shadow: inset 0 0 0 1px var(--forest-pale); }
+  .dj .fs-select option { background: var(--white); color: var(--text); }
+
+  .fs-btn {
+    width: 100%;
+    margin-top: 0.9rem;
+    padding: 1rem 1.5rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+  }
+  .booker .fs-btn { background: var(--forest-pale); color: var(--white); }
+  .booker .fs-btn:hover { background: var(--forest-light); }
+  .dj .fs-btn     { background: var(--forest); color: var(--white); }
+  .dj .fs-btn:hover { background: var(--forest-mid); }
+
+  .fs-note {
+    font-size: 0.68rem;
+    letter-spacing: 0.03em;
+    margin-top: 0.7rem;
+    line-height: 1.5;
+  }
+  .booker .fs-note { color: rgba(248,247,243,0.22); }
+  .dj .fs-note     { color: var(--muted); }
+
+  /* success */
+  .fs-success {
+    display: none;
+    padding: 1.2rem 1.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+  .booker .fs-success { background: rgba(58,138,94,0.1); color: var(--forest-pale); border: 1px solid rgba(58,138,94,0.28); }
+  .dj .fs-success     { background: rgba(26,58,42,0.05); color: var(--forest); border: 1px solid var(--border-strong); }
+
+  /* ── @formspree/ajax managed states ── */
+  /* field-level error spans */
+  span[data-fs-error] {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #e06060;
+    padding: 0.3rem 0 0;
+  }
+  /* form-level error banner */
+  div[data-fs-error] {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.75rem 1.1rem;
+    margin-top: 0.5rem;
+    background: rgba(200,50,50,0.08);
+    color: #e06060;
+    border: 1px solid rgba(200,50,50,0.22);
+  }
+  /* invalid field highlight (set by library via aria-invalid) */
+  .fs-input[aria-invalid="true"],
+  .fs-select[aria-invalid="true"] {
+    box-shadow: inset 0 0 0 1px rgba(220,80,80,0.55);
+  }
+  /* submit button while submitting */
+  .fs-btn[data-fs-submit-btn]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* dj success msg — styled to match, visibility handled by @formspree/ajax */
+  .dj-success-msg {
+    padding: 1.2rem 1.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.6;
+    background: rgba(26,58,42,0.05);
+    color: var(--forest);
+    border: 1px solid var(--border-strong);
+  }
+  .dj-error-banner {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.75rem 1.1rem;
+    margin-top: 0.5rem;
+    background: rgba(200,50,50,0.06);
+    color: #c05050;
+    border: 1px solid rgba(200,50,50,0.18);
+  }
+  .dj .fs-input[aria-invalid="true"],
+  .dj .fs-select[aria-invalid="true"] {
+    box-shadow: inset 0 0 0 1px rgba(200,80,80,0.5);
+  }
+  .dj span[data-fs-error] { color: #c05050; }
+
+  /* booker success msg — styled to match, visibility handled by @formspree/ajax */
+  .booker-success-msg {
+    padding: 1.2rem 1.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.6;
+    background: rgba(58,138,94,0.1);
+    color: var(--forest-pale);
+    border: 1px solid rgba(58,138,94,0.28);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--forest-deep);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-logo { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.1em; color: var(--forest-pale); }
+  .footer-copy { font-size: 0.68rem; color: rgba(248,247,243,0.22); letter-spacing: 0.06em; }
+  .footer-legal { display: flex; gap: 1.8rem; }
+  .footer-legal a { font-size: 0.68rem; color: rgba(248,247,243,0.22); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; }
+  .footer-legal a:hover { color: rgba(248,247,243,0.55); }
+
+  /* ── REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    nav { padding: 1.1rem 1.4rem; }
+    .hero { padding: 8rem 1.5rem 5.5rem; }
+    .how-section { padding: 5rem 1.5rem; }
+    .steps { grid-template-columns: 1fr; }
+    .signup-split { grid-template-columns: 1fr; }
+    .signup-panel { padding: 4rem 2rem; }
+    .signup-panel.dj { border-left: none; border-top: 1px solid var(--border-strong); }
+    footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; }
+  }
+  @media (max-width: 500px) {
+    .hero-pills { gap: 0.4rem; }
+    .signup-panel { padding: 3.5rem 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">FIND ME A DJ</a>
+  <span class="nav-pill">Launching Soon — Join the Waitlist</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="visualizer" id="viz" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">DJ Booking — Done Properly</p>
+
+    <h1 class="hero-headline">
+      STOP<br>ASKING<br>AROUND.
+    </h1>
+
+    <p class="hero-sub">
+      Find Me a DJ connects you with trusted, vetted DJs across the UK — with upfront pricing, real mixes to preview, and a booking process that actually works.
+    </p>
+
+    <div class="hero-pills">
+      <span class="pill"><span class="pill-dot"></span>Book in minutes</span>
+      <span class="pill"><span class="pill-dot"></span>Every DJ vetted</span>
+      <span class="pill"><span class="pill-dot"></span>Price shown upfront</span>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <span>Register below</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="m-item"><span class="m-dot"></span>HOUSE</span>
+    <span class="m-item"><span class="m-dot"></span>TECHNO</span>
+    <span class="m-item"><span class="m-dot"></span>AFROBEATS</span>
+    <span class="m-item"><span class="m-dot"></span>DRUM & BASS</span>
+    <span class="m-item"><span class="m-dot"></span>DISCO</span>
+    <span class="m-item"><span class="m-dot"></span>FUNK & SOUL</span>
+    <span class="m-item"><span class="m-dot"></span>JUNGLE</span>
+    <span class="m-item"><span class="m-dot"></span>GARAGE</span>
+    <span class="m-item"><span class="m-dot"></span>AMAPIANO</span>
+    <span class="m-item"><span class="m-dot"></span>JAZZ</span>
+    <span class="m-item"><span class="m-dot"></span>R&B</span>
+    <span class="m-item"><span class="m-dot"></span>BREAKS</span>
+    <span class="m-item"><span class="m-dot"></span>HOUSE</span>
+    <span class="m-item"><span class="m-dot"></span>TECHNO</span>
+    <span class="m-item"><span class="m-dot"></span>AFROBEATS</span>
+    <span class="m-item"><span class="m-dot"></span>DRUM & BASS</span>
+    <span class="m-item"><span class="m-dot"></span>DISCO</span>
+    <span class="m-item"><span class="m-dot"></span>FUNK & SOUL</span>
+    <span class="m-item"><span class="m-dot"></span>JUNGLE</span>
+    <span class="m-item"><span class="m-dot"></span>GARAGE</span>
+    <span class="m-item"><span class="m-dot"></span>AMAPIANO</span>
+    <span class="m-item"><span class="m-dot"></span>JAZZ</span>
+    <span class="m-item"><span class="m-dot"></span>R&B</span>
+    <span class="m-item"><span class="m-dot"></span>BREAKS</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="how-inner">
+    <div class="section-label reveal">No guesswork, no chasing</div>
+    <h2 class="section-heading reveal">THREE STEPS.<br>ONE GREAT NIGHT.</h2>
+    <p class="section-sub reveal">We've stripped out the friction that makes booking a DJ harder than it should be.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-icon">🔍</div>
+        <h3 class="step-title">SEARCH</h3>
+        <p class="step-desc">Filter by genre, location, and budget. Every DJ shows their rates upfront — no back-and-forth, no "drop me a DM for pricing."</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-icon">📩</div>
+        <h3 class="step-title">BOOK</h3>
+        <p class="step-desc">Send a request, get a confirmed booking. Your payment is held securely until the event is done — you're covered if anything changes.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-icon">🔊</div>
+        <h3 class="step-title">DONE.</h3>
+        <p class="step-desc">Your DJ shows up, plays the set, crowd is happy. Funds release automatically. No invoices to chase, no awkward cash conversations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNUP SPLIT -->
+<div class="signup-split" id="signup">
+
+  <!-- ── BOOKER PANEL ── -->
+  <div class="signup-panel booker">
+    <div class="panel-tag">I need to book a DJ</div>
+
+    <h2 class="panel-heading">
+      YOUR NIGHT<br>DESERVES A<br><em>GREAT DJ.</em>
+    </h2>
+
+    <p class="panel-sub">
+      We're launching soon. Get early access and be first to search our roster of vetted DJs — from wedding sets to club residencies, across the whole of the UK.
+    </p>
+
+    <ul class="benefit-list">
+      <li>Every DJ reviewed and approved before listing</li>
+      <li>Listen to real mixes before you commit</li>
+      <li>Price is what you see — nothing added at checkout</li>
+      <li>Payment protected until after the event</li>
+    </ul>
+
+    <!-- ── BOOKER FORM — @formspree/ajax (Vanilla JS CDN) ──
+         Endpoint: https://formspree.io/f/xwvwapgy (Bookers Waitlist)
+    -->
+
+    <!-- Success banner — shown by the library on successful submission -->
+    <div data-fs-success class="booker-success-msg">
+      ✓ &nbsp;You're on the list.<br>We'll be in touch before we launch.
+    </div>
+
+    <!-- Form-level error banner — shown by the library if submission fails -->
+    <div data-fs-error></div>
+
+    <form
+      class="fs-form"
+      id="booker-form"
+    >
+      <input
+        class="fs-input"
+        type="email"
+        id="booker-email"
+        name="email"
+        placeholder="your@email.com"
+        required
+        autocomplete="email"
+        aria-label="Email address"
+        data-fs-field
+      >
+      <!-- Field-level email error -->
+      <span data-fs-error="email"></span>
+
+      <span class="fs-optional-label">What kind of event? (optional)</span>
+      <select class="fs-select" name="event_type" aria-label="Event type (optional)">
+        <option value="" disabled selected>Select an event type…</option>
+        <option value="wedding">Wedding</option>
+        <option value="private-party">Private party</option>
+        <option value="corporate">Corporate event</option>
+        <option value="club-night">Club night</option>
+        <option value="pub-bar">Pub or bar</option>
+        <option value="festival">Festival or outdoor event</option>
+        <option value="birthday">Birthday</option>
+        <option value="other">Other</option>
+      </select>
+
+      <button class="fs-btn" type="submit" data-fs-submit-btn>Get Early Access →</button>
+
+      <p class="fs-note">No spam, ever. Just a heads-up when we go live — and early access before anyone else.</p>
+    </form>
+  </div>
+
+  <!-- ── DJ PANEL ── -->
+  <div class="signup-panel dj">
+    <div class="panel-tag">I'm a DJ looking for gigs</div>
+
+    <h2 class="panel-heading">
+      MORE GIGS.<br>LESS<br><em>CHASING.</em>
+    </h2>
+
+    <p class="panel-sub">
+      Tired of relying on word of mouth? Register now and be among the first DJs on the platform when we launch — with a profile that puts you in front of bookers who are actively searching.
+    </p>
+
+    <ul class="benefit-list">
+      <li>Free profile — you set your rates and availability</li>
+      <li>Bookers come to you, not the other way around</li>
+      <li>Keep 90% of every booking. We take 10%, full stop.</li>
+      <li>Invoicing and payouts handled automatically</li>
+    </ul>
+
+    <!-- ── DJ FORM — @formspree/ajax (Vanilla JS CDN) ──
+         Endpoint: https://formspree.io/f/xkopkgdp (DJs Waitlist)
+    -->
+
+    <!-- Success banner — shown by the library on successful submission -->
+    <div data-fs-success class="dj-success-msg">
+      ✓ &nbsp;Registered.<br>We'll reach out ahead of launch.
+    </div>
+
+    <!-- Form-level error banner — shown by the library if submission fails -->
+    <div data-fs-error class="dj-error-banner"></div>
+
+    <form
+      class="fs-form"
+      id="dj-form"
+    >
+      <input
+        class="fs-input"
+        type="email"
+        id="dj-email"
+        name="email"
+        placeholder="your@email.com"
+        required
+        autocomplete="email"
+        aria-label="Email address"
+        data-fs-field
+      >
+      <!-- Field-level email error -->
+      <span data-fs-error="email"></span>
+
+      <span class="fs-optional-label">Your main genre (optional)</span>
+      <select class="fs-select" name="genre" aria-label="Primary genre (optional)">
+        <option value="" disabled selected>Select your genre…</option>
+        <option value="house">House</option>
+        <option value="techno">Techno</option>
+        <option value="drum-and-bass">Drum &amp; Bass</option>
+        <option value="afrobeats">Afrobeats / Amapiano</option>
+        <option value="rnb-hip-hop">R&amp;B / Hip-Hop</option>
+        <option value="disco-funk-soul">Disco / Funk / Soul</option>
+        <option value="garage-jungle">Garage / Jungle</option>
+        <option value="wedding-party">Wedding &amp; Party sets</option>
+        <option value="jazz">Jazz</option>
+        <option value="other">Other / Mixed</option>
+      </select>
+
+      <button class="fs-btn" type="submit" data-fs-submit-btn>Register as a DJ →</button>
+
+      <p class="fs-note">We'll be in touch before we go live. No commitments — just first in line.</p>
+    </form>
+  </div>
+
+</div><!-- /signup-split -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">FIND ME A DJ</div>
+  <div class="footer-copy">© 2025 Find Me a DJ Ltd. · Registered in England & Wales</div>
+  <div class="footer-legal">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+  /* EQ bars */
+  const viz = document.getElementById('viz');
+  for (let i = 0; i < 90; i++) {
+    const b = document.createElement('div');
+    b.className = 'bar';
+    b.style.cssText = `height:${Math.random()*120+16}px;--d:${(Math.random()*0.9+0.6).toFixed(2)}s;animation-delay:-${(Math.random()*1.8).toFixed(2)}s`;
+    viz.appendChild(b);
+  }
+
+  /* Scroll reveals */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 50);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  /* ── Booker form: @formspree/ajax (CDN) ──
+     Initialised below the CDN <script> tag via the global formspree() queue.
+     No manual fetch needed — the library handles submission, errors, and success. */
+  window.formspree = window.formspree || function() {
+    (formspree.q = formspree.q || []).push(arguments);
+  };
+  formspree('initForm', {
+    formElement: '#booker-form',
+    formId: 'xwvwapgy'
+  });
+
+  /* ── DJ form: @formspree/ajax (CDN) ──
+     Same library as the booker form — the single CDN script below handles both. */
+  formspree('initForm', {
+    formElement: '#dj-form',
+    formId: 'xkopkgdp'
+  });
+</script>
+
+<!-- @formspree/ajax CDN — powers both the booker and DJ forms -->
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+</body>
+</html>
