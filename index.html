@@ -328,13 +328,13 @@
     justify-content: center;
   }
   .signup-panel.booker {
-    background: var(--forest-deep);
-    color: var(--white);
-  }
-  .signup-panel.dj {
     background: var(--white);
     color: var(--text);
-    border-left: 1px solid var(--border-strong);
+  }
+  .signup-panel.dj {
+    background: var(--forest-deep);
+    color: var(--white);
+    border-left: 1px solid rgba(255,255,255,0.06);
   }
 
   .panel-tag {
@@ -348,7 +348,7 @@
     gap: 0.6rem;
   }
   .booker .panel-tag { color: var(--forest-pale); }
-  .dj .panel-tag     { color: var(--forest-pale); }
+  .dj .panel-tag     { color: var(--forest-faint); }
   .panel-tag::before { content: ''; display: block; width: 16px; height: 1px; background: currentColor; }
 
   .panel-heading {
@@ -358,8 +358,8 @@
     letter-spacing: 0.02em;
     margin-bottom: 1rem;
   }
-  .booker .panel-heading { color: var(--white); }
-  .dj .panel-heading     { color: var(--forest); }
+  .booker .panel-heading { color: var(--forest); }
+  .dj .panel-heading     { color: var(--white); }
   .panel-heading em { font-style: normal; color: var(--forest-pale); }
 
   .panel-sub {
@@ -367,8 +367,8 @@
     line-height: 1.72;
     margin-bottom: 1.6rem;
   }
-  .booker .panel-sub { color: rgba(248,247,243,0.48); }
-  .dj .panel-sub     { color: var(--text-light); }
+  .booker .panel-sub { color: var(--text-light); }
+  .dj .panel-sub     { color: rgba(248,247,243,0.48); }
 
   .benefit-list {
     list-style: none;
@@ -383,11 +383,11 @@
     gap: 0.65rem;
     font-size: 0.86rem;
   }
-  .booker .benefit-list li { color: rgba(248,247,243,0.65); }
-  .dj .benefit-list li     { color: var(--text-light); }
+  .booker .benefit-list li { color: var(--text-light); }
+  .dj .benefit-list li     { color: rgba(248,247,243,0.65); }
   .benefit-list li::before { content: '→'; flex-shrink: 0; font-weight: 700; }
-  .booker .benefit-list li::before { color: var(--forest-pale); }
-  .dj .benefit-list li::before     { color: var(--forest-mid); }
+  .booker .benefit-list li::before { color: var(--forest-mid); }
+  .dj .benefit-list li::before     { color: var(--forest-pale); }
 
   /* ── FORMSPREE FORM ── */
   .fs-form {
@@ -419,14 +419,14 @@
   .booker .fs-input:focus         { box-shadow: inset 0 0 0 1px rgba(58,138,94,0.55); }
 
   .dj .fs-input {
-    background: var(--off-white);
-    color: var(--text);
-    border: 1px solid var(--border-strong);
+    background: rgba(255,255,255,0.07);
+    color: var(--white);
+    border: 1px solid rgba(248,247,243,0.14);
     border-bottom: none;
   }
-  .dj .fs-input:last-of-type { border-bottom: 1px solid var(--border-strong); }
-  .dj .fs-input::placeholder  { color: var(--muted); }
-  .dj .fs-input:focus         { box-shadow: inset 0 0 0 1px var(--forest-pale); }
+  .dj .fs-input:last-of-type { border-bottom: 1px solid rgba(248,247,243,0.14); }
+  .dj .fs-input::placeholder  { color: rgba(248,247,243,0.27); }
+  .dj .fs-input:focus         { box-shadow: inset 0 0 0 1px rgba(58,138,94,0.55); }
 
   /* optional field label */
   .fs-optional-label {
@@ -437,43 +437,8 @@
     padding: 0.5rem 1.2rem 0;
     display: block;
   }
-  .booker .fs-optional-label { color: rgba(248,247,243,0.25); background: rgba(255,255,255,0.06); border: 1px solid rgba(248,247,243,0.14); border-top: none; border-bottom: none; }
-  .dj .fs-optional-label     { color: var(--muted); background: var(--off-white); border: 1px solid var(--border-strong); border-top: none; border-bottom: none; }
 
-  .fs-select {
-    width: 100%;
-    padding: 0.7rem 1.2rem 0.9rem;
-    font-family: var(--font-body);
-    font-size: 0.87rem;
-    font-weight: 300;
-    outline: none;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    background-repeat: no-repeat;
-    background-position: right 1.1rem center;
-    background-size: 10px;
-    transition: box-shadow 0.18s;
-  }
-  .booker .fs-select {
-    background-color: rgba(255,255,255,0.06);
-    color: var(--white);
-    border: 1px solid rgba(248,247,243,0.14);
-    border-top: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(248,247,243,0.3)'/%3E%3C/svg%3E");
-  }
-  .booker .fs-select:focus { box-shadow: inset 0 0 0 1px rgba(58,138,94,0.55); }
-  .booker .fs-select option { background: var(--forest-deep); color: var(--white); }
 
-  .dj .fs-select {
-    background-color: var(--off-white);
-    color: var(--text);
-    border: 1px solid var(--border-strong);
-    border-top: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(26,46,34,0.35)'/%3E%3C/svg%3E");
-  }
-  .dj .fs-select:focus { box-shadow: inset 0 0 0 1px var(--forest-pale); }
-  .dj .fs-select option { background: var(--white); color: var(--text); }
 
   .fs-btn {
     width: 100%;
@@ -488,10 +453,10 @@
     cursor: pointer;
     transition: background 0.2s, opacity 0.2s;
   }
-  .booker .fs-btn { background: var(--forest-pale); color: var(--white); }
-  .booker .fs-btn:hover { background: var(--forest-light); }
-  .dj .fs-btn     { background: var(--forest); color: var(--white); }
-  .dj .fs-btn:hover { background: var(--forest-mid); }
+  .booker .fs-btn { background: var(--forest); color: var(--white); }
+  .booker .fs-btn:hover { background: var(--forest-mid); }
+  .dj .fs-btn     { background: var(--forest-pale); color: var(--white); }
+  .dj .fs-btn:hover { background: var(--forest-light); }
 
   .fs-note {
     font-size: 0.68rem;
@@ -499,8 +464,8 @@
     margin-top: 0.7rem;
     line-height: 1.5;
   }
-  .booker .fs-note { color: rgba(248,247,243,0.22); }
-  .dj .fs-note     { color: var(--muted); }
+  .booker .fs-note { color: var(--muted); }
+  .dj .fs-note     { color: rgba(248,247,243,0.22); }
 
   /* success */
   .fs-success {
@@ -512,8 +477,8 @@
     text-transform: uppercase;
     line-height: 1.6;
   }
-  .booker .fs-success { background: rgba(58,138,94,0.1); color: var(--forest-pale); border: 1px solid rgba(58,138,94,0.28); }
-  .dj .fs-success     { background: rgba(26,58,42,0.05); color: var(--forest); border: 1px solid var(--border-strong); }
+  .booker .fs-success { background: rgba(26,58,42,0.05); color: var(--forest); border: 1px solid var(--border-strong); }
+  .dj .fs-success     { background: rgba(58,138,94,0.1); color: var(--forest-pale); border: 1px solid rgba(58,138,94,0.28); }
 
   /* ── @formspree/ajax managed states ── */
   /* field-level error spans */
@@ -541,7 +506,6 @@
   }
   /* invalid field highlight (set by library via aria-invalid) */
   .fs-input[aria-invalid="true"],
-  .fs-select[aria-invalid="true"] {
     box-shadow: inset 0 0 0 1px rgba(220,80,80,0.55);
   }
   /* submit button while submitting */
@@ -558,9 +522,9 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     line-height: 1.6;
-    background: rgba(26,58,42,0.05);
-    color: var(--forest);
-    border: 1px solid var(--border-strong);
+    background: rgba(58,138,94,0.1);
+    color: var(--forest-pale);
+    border: 1px solid rgba(58,138,94,0.28);
   }
   .dj-error-banner {
     font-family: var(--font-mono);
@@ -573,11 +537,10 @@
     color: #c05050;
     border: 1px solid rgba(200,50,50,0.18);
   }
-  .dj .fs-input[aria-invalid="true"],
-  .dj .fs-select[aria-invalid="true"] {
-    box-shadow: inset 0 0 0 1px rgba(200,80,80,0.5);
+  .dj .fs-input[aria-invalid="true"] {
+    box-shadow: inset 0 0 0 1px rgba(220,80,80,0.55);
   }
-  .dj span[data-fs-error] { color: #c05050; }
+  .dj span[data-fs-error] { color: #e06060; }
 
   /* booker success msg — styled to match, visibility handled by @formspree/ajax */
   .booker-success-msg {
@@ -587,9 +550,77 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     line-height: 1.6;
-    background: rgba(58,138,94,0.1);
+    background: rgba(26,58,42,0.05);
+    color: var(--forest);
+    border: 1px solid var(--border-strong);
+  }
+
+  .fs-optional-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-top: 0.9rem;
+    margin-bottom: 0.1rem;
+  }
+  .booker .fs-optional-label { color: var(--muted); }
+  .dj .fs-optional-label     { color: rgba(248,247,243,0.35); }
+  /* ── Pill checkbox group ── */
+  .pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.6rem;
+    margin-bottom: 0;
+  }
+  .pill-group input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0; height: 0;
+    pointer-events: none;
+  }
+  .pill-choice {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.38rem 0.85rem;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    user-select: none;
+  }
+  /* Booker pills — light panel */
+  .booker .pill-choice {
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--muted);
+  }
+  .booker .pill-choice:hover {
+    border-color: var(--forest);
+    color: var(--forest);
+  }
+  .booker input[type="checkbox"]:checked + .pill-choice {
+    background: var(--forest);
+    border-color: var(--forest);
+    color: var(--white);
+  }
+  /* DJ pills — dark panel */
+  .dj .pill-choice {
+    border: 1px solid rgba(248,247,243,0.2);
+    background: transparent;
+    color: rgba(248,247,243,0.45);
+  }
+  .dj .pill-choice:hover {
+    border-color: var(--forest-pale);
     color: var(--forest-pale);
-    border: 1px solid rgba(58,138,94,0.28);
+  }
+  .dj input[type="checkbox"]:checked + .pill-choice {
+    background: var(--forest-pale);
+    border-color: var(--forest-pale);
+    color: var(--white);
   }
 
   /* ── FOOTER ── */
@@ -621,7 +652,7 @@
     .steps { grid-template-columns: 1fr; }
     .signup-split { grid-template-columns: 1fr; }
     .signup-panel { padding: 4rem 2rem; }
-    .signup-panel.dj { border-left: none; border-top: 1px solid var(--border-strong); }
+    .signup-panel.dj { border-left: none; border-top: 1px solid rgba(255,255,255,0.06); }
     footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; }
   }
   @media (max-width: 500px) {
@@ -666,6 +697,147 @@
     <div class="scroll-arrow"></div>
   </div>
 </section>
+
+
+<!-- SIGNUP SPLIT -->
+<div class="signup-split" id="signup">
+
+  <!-- ── BOOKER PANEL ── -->
+  <div class="signup-panel booker">
+    <div class="panel-tag">I need to book a DJ</div>
+
+    <h2 class="panel-heading">
+      YOUR NIGHT<br>DESERVES A<br><em style="color:var(--forest-pale)">GREAT DJ.</em>
+    </h2>
+
+    <p class="panel-sub">
+      We're launching soon. Get early access and be first to search our roster of vetted DJs — from wedding sets to club residencies, across the whole of the UK.
+    </p>
+
+    <ul class="benefit-list">
+      <li>Every DJ reviewed and approved before listing</li>
+      <li>Price is what you see — nothing added at checkout</li>
+      <li>Payment protected until after the event</li>
+    </ul>
+
+    <!-- ── BOOKER FORM — @formspree/ajax (Vanilla JS CDN) ──
+         Endpoint: https://formspree.io/f/xwvwapgy (Bookers Waitlist)
+    -->
+
+    <!-- Success banner — shown by the library on successful submission -->
+    <div data-fs-success class="booker-success-msg">
+      ✓ &nbsp;You're on the list.<br>We'll be in touch before we launch.
+    </div>
+
+    <!-- Form-level error banner — shown by the library if submission fails -->
+    <div data-fs-error></div>
+
+    <form
+      class="fs-form"
+      id="booker-form"
+    >
+      <input
+        class="fs-input"
+        type="email"
+        id="booker-email"
+        name="email"
+        placeholder="your@email.com"
+        required
+        autocomplete="email"
+        aria-label="Email address"
+        data-fs-field
+      >
+      <!-- Field-level email error -->
+      <span data-fs-error="email"></span>
+
+      <span class="fs-optional-label">What kind of event? <span style="opacity:0.5">(pick any)</span></span>
+      <div class="pill-group" role="group" aria-label="Event type">
+        <label><input type="checkbox" name="event_type" value="wedding"><span class="pill-choice">Wedding</span></label>
+        <label><input type="checkbox" name="event_type" value="private-party"><span class="pill-choice">Private party</span></label>
+        <label><input type="checkbox" name="event_type" value="birthday"><span class="pill-choice">Birthday</span></label>
+        <label><input type="checkbox" name="event_type" value="corporate"><span class="pill-choice">Corporate</span></label>
+        <label><input type="checkbox" name="event_type" value="club-night"><span class="pill-choice">Club night</span></label>
+        <label><input type="checkbox" name="event_type" value="pub-bar"><span class="pill-choice">Pub / Bar</span></label>
+        <label><input type="checkbox" name="event_type" value="festival"><span class="pill-choice">Festival</span></label>
+        <label><input type="checkbox" name="event_type" value="other"><span class="pill-choice">Other</span></label>
+      </div>
+
+      <button class="fs-btn" type="submit" data-fs-submit-btn>Get Early Access →</button>
+
+      <p class="fs-note">No spam, ever. Just a heads-up when we go live — and early access before anyone else.</p>
+    </form>
+  </div>
+
+  <!-- ── DJ PANEL ── -->
+  <div class="signup-panel dj">
+    <div class="panel-tag">I'm a DJ looking for gigs</div>
+
+    <h2 class="panel-heading">
+      MORE GIGS.<br>LESS<br><em style="color:var(--forest-faint)">CHASING.</em>
+    </h2>
+
+    <p class="panel-sub">
+      Tired of relying on word of mouth? Register now and be among the first DJs on the platform when we launch — with a profile that puts you in front of bookers who are actively searching.
+    </p>
+
+    <ul class="benefit-list">
+      <li>Free profile — you set your rates and availability</li>
+      <li>Bookers come to you, not the other way around</li>
+      <li>Invoicing and payouts handled automatically</li>
+    </ul>
+
+    <!-- ── DJ FORM — @formspree/ajax (Vanilla JS CDN) ──
+         Endpoint: https://formspree.io/f/xkopkgdp (DJs Waitlist)
+    -->
+
+    <!-- Success banner — shown by the library on successful submission -->
+    <div data-fs-success class="dj-success-msg">
+      ✓ &nbsp;Registered.<br>We'll reach out ahead of launch.
+    </div>
+
+    <!-- Form-level error banner — shown by the library if submission fails -->
+    <div data-fs-error class="dj-error-banner"></div>
+
+    <form
+      class="fs-form"
+      id="dj-form"
+    >
+      <input
+        class="fs-input"
+        type="email"
+        id="dj-email"
+        name="email"
+        placeholder="your@email.com"
+        required
+        autocomplete="email"
+        aria-label="Email address"
+        data-fs-field
+      >
+      <!-- Field-level email error -->
+      <span data-fs-error="email"></span>
+
+      <span class="fs-optional-label">Your genre(s) <span style="opacity:0.5">(pick any)</span></span>
+      <div class="pill-group" role="group" aria-label="Music genre">
+        <label><input type="checkbox" name="genre" value="house"><span class="pill-choice">House</span></label>
+        <label><input type="checkbox" name="genre" value="techno"><span class="pill-choice">Techno</span></label>
+        <label><input type="checkbox" name="genre" value="drum-and-bass"><span class="pill-choice">D&amp;B</span></label>
+        <label><input type="checkbox" name="genre" value="afrobeats"><span class="pill-choice">Afrobeats</span></label>
+        <label><input type="checkbox" name="genre" value="amapiano"><span class="pill-choice">Amapiano</span></label>
+        <label><input type="checkbox" name="genre" value="rnb-hip-hop"><span class="pill-choice">R&amp;B / Hip-Hop</span></label>
+        <label><input type="checkbox" name="genre" value="disco-funk-soul"><span class="pill-choice">Disco / Soul</span></label>
+        <label><input type="checkbox" name="genre" value="garage-jungle"><span class="pill-choice">Garage / Jungle</span></label>
+        <label><input type="checkbox" name="genre" value="jazz"><span class="pill-choice">Jazz</span></label>
+        <label><input type="checkbox" name="genre" value="wedding-party"><span class="pill-choice">Weddings</span></label>
+        <label><input type="checkbox" name="genre" value="other"><span class="pill-choice">Other</span></label>
+      </div>
+
+      <button class="fs-btn" type="submit" data-fs-submit-btn>Register as a DJ →</button>
+
+      <p class="fs-note">We'll be in touch before we go live. No commitments — just first in line.</p>
+    </form>
+  </div>
+
+</div><!-- /signup-split -->
 
 <!-- MARQUEE -->
 <div class="marquee-wrap" aria-hidden="true">
@@ -725,149 +897,6 @@
     </div>
   </div>
 </section>
-
-<!-- SIGNUP SPLIT -->
-<div class="signup-split" id="signup">
-
-  <!-- ── BOOKER PANEL ── -->
-  <div class="signup-panel booker">
-    <div class="panel-tag">I need to book a DJ</div>
-
-    <h2 class="panel-heading">
-      YOUR NIGHT<br>DESERVES A<br><em>GREAT DJ.</em>
-    </h2>
-
-    <p class="panel-sub">
-      We're launching soon. Get early access and be first to search our roster of vetted DJs — from wedding sets to club residencies, across the whole of the UK.
-    </p>
-
-    <ul class="benefit-list">
-      <li>Every DJ reviewed and approved before listing</li>
-      <li>Listen to real mixes before you commit</li>
-      <li>Price is what you see — nothing added at checkout</li>
-      <li>Payment protected until after the event</li>
-    </ul>
-
-    <!-- ── BOOKER FORM — @formspree/ajax (Vanilla JS CDN) ──
-         Endpoint: https://formspree.io/f/xwvwapgy (Bookers Waitlist)
-    -->
-
-    <!-- Success banner — shown by the library on successful submission -->
-    <div data-fs-success class="booker-success-msg">
-      ✓ &nbsp;You're on the list.<br>We'll be in touch before we launch.
-    </div>
-
-    <!-- Form-level error banner — shown by the library if submission fails -->
-    <div data-fs-error></div>
-
-    <form
-      class="fs-form"
-      id="booker-form"
-    >
-      <input
-        class="fs-input"
-        type="email"
-        id="booker-email"
-        name="email"
-        placeholder="your@email.com"
-        required
-        autocomplete="email"
-        aria-label="Email address"
-        data-fs-field
-      >
-      <!-- Field-level email error -->
-      <span data-fs-error="email"></span>
-
-      <span class="fs-optional-label">What kind of event? (optional)</span>
-      <select class="fs-select" name="event_type" aria-label="Event type (optional)">
-        <option value="" disabled selected>Select an event type…</option>
-        <option value="wedding">Wedding</option>
-        <option value="private-party">Private party</option>
-        <option value="corporate">Corporate event</option>
-        <option value="club-night">Club night</option>
-        <option value="pub-bar">Pub or bar</option>
-        <option value="festival">Festival or outdoor event</option>
-        <option value="birthday">Birthday</option>
-        <option value="other">Other</option>
-      </select>
-
-      <button class="fs-btn" type="submit" data-fs-submit-btn>Get Early Access →</button>
-
-      <p class="fs-note">No spam, ever. Just a heads-up when we go live — and early access before anyone else.</p>
-    </form>
-  </div>
-
-  <!-- ── DJ PANEL ── -->
-  <div class="signup-panel dj">
-    <div class="panel-tag">I'm a DJ looking for gigs</div>
-
-    <h2 class="panel-heading">
-      MORE GIGS.<br>LESS<br><em>CHASING.</em>
-    </h2>
-
-    <p class="panel-sub">
-      Tired of relying on word of mouth? Register now and be among the first DJs on the platform when we launch — with a profile that puts you in front of bookers who are actively searching.
-    </p>
-
-    <ul class="benefit-list">
-      <li>Free profile — you set your rates and availability</li>
-      <li>Bookers come to you, not the other way around</li>
-      <li>Keep 90% of every booking. We take 10%, full stop.</li>
-      <li>Invoicing and payouts handled automatically</li>
-    </ul>
-
-    <!-- ── DJ FORM — @formspree/ajax (Vanilla JS CDN) ──
-         Endpoint: https://formspree.io/f/xkopkgdp (DJs Waitlist)
-    -->
-
-    <!-- Success banner — shown by the library on successful submission -->
-    <div data-fs-success class="dj-success-msg">
-      ✓ &nbsp;Registered.<br>We'll reach out ahead of launch.
-    </div>
-
-    <!-- Form-level error banner — shown by the library if submission fails -->
-    <div data-fs-error class="dj-error-banner"></div>
-
-    <form
-      class="fs-form"
-      id="dj-form"
-    >
-      <input
-        class="fs-input"
-        type="email"
-        id="dj-email"
-        name="email"
-        placeholder="your@email.com"
-        required
-        autocomplete="email"
-        aria-label="Email address"
-        data-fs-field
-      >
-      <!-- Field-level email error -->
-      <span data-fs-error="email"></span>
-
-      <span class="fs-optional-label">Your main genre (optional)</span>
-      <select class="fs-select" name="genre" aria-label="Primary genre (optional)">
-        <option value="" disabled selected>Select your genre…</option>
-        <option value="house">House</option>
-        <option value="techno">Techno</option>
-        <option value="drum-and-bass">Drum &amp; Bass</option>
-        <option value="afrobeats">Afrobeats / Amapiano</option>
-        <option value="rnb-hip-hop">R&amp;B / Hip-Hop</option>
-        <option value="disco-funk-soul">Disco / Funk / Soul</option>
-        <option value="garage-jungle">Garage / Jungle</option>
-        <option value="wedding-party">Wedding &amp; Party sets</option>
-        <option value="jazz">Jazz</option>
-        <option value="other">Other / Mixed</option>
-      </select>
-
-      <button class="fs-btn" type="submit" data-fs-submit-btn>Register as a DJ →</button>
-
-      <p class="fs-note">We'll be in touch before we go live. No commitments — just first in line.</p>
-    </form>
-  </div>
-
-</div><!-- /signup-split -->
 
 <!-- FOOTER -->
 <footer>
