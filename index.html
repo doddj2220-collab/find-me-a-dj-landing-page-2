@@ -328,6 +328,8 @@
     flex-direction: column;
     justify-content: flex-start;
   }
+  .signup-panel .fs-form,
+  .signup-panel > form { flex: 1; display: flex; flex-direction: column; }
   .signup-panel.booker {
     background: var(--white);
     color: var(--text);
@@ -395,6 +397,17 @@
     display: flex;
     flex-direction: column;
     gap: 0;
+    flex: 1;
+  }
+  /* booker pill group — extra min-height to align button with DJ side (3 rows vs 2) */
+  .booker-pills {
+    min-height: 12.5rem;
+  }
+
+  /* pill group expands to fill all remaining form space, pinning button to bottom */
+  .fs-form .pill-group {
+    flex: 1;
+    align-content: flex-start;
   }
 
   /* stacked inputs with a shared border */
@@ -443,7 +456,7 @@
 
   .fs-btn {
     width: 100%;
-    margin-top: 0.9rem;
+    margin-top: auto;
     padding: 1rem 1.5rem;
     font-family: var(--font-body);
     font-weight: 500;
@@ -574,6 +587,7 @@
     gap: 0.45rem;
     margin-top: 0.6rem;
     margin-bottom: 0;
+    padding-bottom: 0;
   }
   .pill-group input[type="checkbox"] {
     position: absolute;
@@ -752,7 +766,7 @@
       <span data-fs-error="email"></span>
 
       <span class="fs-optional-label">What kind of event? <span style="opacity:0.5">(pick any)</span></span>
-      <div class="pill-group" role="group" aria-label="Event type">
+      <div class="pill-group booker-pills" role="group" aria-label="Event type">
         <label><input type="checkbox" name="event_type" value="wedding"><span class="pill-choice">Wedding</span></label>
         <label><input type="checkbox" name="event_type" value="private-party"><span class="pill-choice">Private party</span></label>
         <label><input type="checkbox" name="event_type" value="birthday"><span class="pill-choice">Birthday</span></label>
@@ -819,15 +833,12 @@
 
       <span class="fs-optional-label">Your genre(s) <span style="opacity:0.5">(pick any)</span></span>
       <div class="pill-group" role="group" aria-label="Music genre">
-        <label><input type="checkbox" name="genre" value="house"><span class="pill-choice">House</span></label>
-        <label><input type="checkbox" name="genre" value="techno"><span class="pill-choice">Techno</span></label>
-        <label><input type="checkbox" name="genre" value="drum-and-bass"><span class="pill-choice">D&amp;B</span></label>
+        <label><input type="checkbox" name="genre" value="house-garage"><span class="pill-choice">House / Garage</span></label>
+        <label><input type="checkbox" name="genre" value="dnb-jungle"><span class="pill-choice">D&amp;B / Jungle</span></label>
         <label><input type="checkbox" name="genre" value="afrobeats"><span class="pill-choice">Afrobeats</span></label>
-        <label><input type="checkbox" name="genre" value="amapiano"><span class="pill-choice">Amapiano</span></label>
         <label><input type="checkbox" name="genre" value="rnb-hip-hop"><span class="pill-choice">R&amp;B / Hip-Hop</span></label>
         <label><input type="checkbox" name="genre" value="disco-funk-soul"><span class="pill-choice">Disco / Soul</span></label>
-        <label><input type="checkbox" name="genre" value="garage-jungle"><span class="pill-choice">Garage / Jungle</span></label>
-        <label><input type="checkbox" name="genre" value="jazz"><span class="pill-choice">Jazz</span></label>
+        <label><input type="checkbox" name="genre" value="techno"><span class="pill-choice">Techno</span></label>
         <label><input type="checkbox" name="genre" value="wedding-party"><span class="pill-choice">Weddings</span></label>
         <label><input type="checkbox" name="genre" value="other"><span class="pill-choice">Other</span></label>
       </div>
