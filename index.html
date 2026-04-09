@@ -8,19 +8,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
+    /* greens */
     --forest:        #1a3a2a;
-    --forest-deep:   #122a1e;
-    --forest-mid:    #224d38;
+    --forest-deep:   #0f2f2a;
+    --forest-mid:    #17443c;
     --forest-light:  #2d6b4a;
     --forest-pale:   #3a8a5e;
     --forest-faint:  #4fa070;
-    --white:         #f8f7f3;
-    --off-white:     #efefea;
-    --border:        rgba(26,58,42,0.11);
-    --border-strong: rgba(26,58,42,0.22);
-    --muted:         #7a8c82;
-    --text:          #1a2e22;
-    --text-light:    rgba(26,46,34,0.52);
+    /* accent — used for CTAs */
+    --accent:        #3faf7a;
+    --accent-hover:  #33966a;
+    /* light side */
+    --white:         #f7f6f3;
+    --off-white:     #eceae5;
+    --card:          #f7f6f3;
+    /* text */
+    --text:          #1a1a1a;
+    --text-light:    rgba(26,26,26,0.52);
+    --muted:         #7a8474;
+    /* borders */
+    --border:        rgba(26,26,26,0.09);
+    --border-strong: rgba(26,26,26,0.18);
+    /* fonts */
     --font-display:  'Bebas Neue', sans-serif;
     --font-body:     'DM Sans', sans-serif;
     --font-mono:     'Space Mono', monospace;
@@ -40,14 +49,14 @@
 
   /* ── NAV ── */
   nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
+    position: sticky;
+    top: 0;
     z-index: 200;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 1.25rem 3rem;
-    background: rgba(248,247,243,0.96);
+    background: rgba(247,246,243,0.97);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
@@ -63,257 +72,57 @@
     font-size: 0.6rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--forest-pale);
-    border: 1px solid var(--border-strong);
+    color: var(--accent);
+    border: 1px solid rgba(63,175,122,0.35);
     padding: 0.38rem 0.95rem;
   }
 
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 10rem 2rem 7rem;
-    text-align: center;
-    overflow: hidden;
-    background: var(--forest-deep);
+  /* ── SIGNUP INTRO (above split) ── */
+  .signup-intro {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 4rem 4.5rem 3.5rem;
+    scroll-margin-top: 4rem;
+    text-align: left;
   }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 120%, rgba(45,107,74,0.40) 0%, transparent 58%),
-      radial-gradient(ellipse 35% 35% at 10% 20%,  rgba(45,107,74,0.08) 0%, transparent 55%),
-      radial-gradient(ellipse 28% 28% at 90% 15%,  rgba(45,107,74,0.06) 0%, transparent 55%);
-  }
-
-  /* EQ bars */
-  .visualizer {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 140px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 3px;
-    padding: 0 1rem;
-    opacity: 0.12;
-    pointer-events: none;
-  }
-  .bar {
-    width: 4px;
-    background: linear-gradient(to top, #3a8a5e, transparent);
-    border-radius: 2px 2px 0 0;
-    animation: eq var(--d,1.2s) ease-in-out infinite alternate;
-    transform-origin: bottom;
-  }
-  @keyframes eq {
-    from { transform: scaleY(0.1); }
-    to   { transform: scaleY(1); }
-  }
-
-  .hero-content { position: relative; z-index: 2; max-width: 780px; }
-
-  .hero-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.64rem;
-    letter-spacing: 0.26em;
-    color: var(--forest-faint);
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: up 0.8s 0.15s forwards;
-  }
-
-  .hero-headline {
-    font-family: var(--font-display);
-    font-size: clamp(4rem, 11vw, 9.5rem);
-    line-height: 0.9;
-    letter-spacing: 0.025em;
-    color: var(--white);
-    margin-bottom: 1.8rem;
-    opacity: 0;
-    animation: up 0.8s 0.3s forwards;
-  }
-  .hero-headline em {
-    font-style: normal;
-    color: var(--forest-pale);
-  }
-
-  .hero-sub {
-    font-size: clamp(0.95rem, 1.8vw, 1.12rem);
-    color: rgba(248,247,243,0.52);
-    max-width: 460px;
-    margin: 0 auto 2.5rem;
-    font-weight: 300;
-    line-height: 1.7;
-    opacity: 0;
-    animation: up 0.8s 0.45s forwards;
-  }
-
-  .hero-pills {
-    display: flex;
-    gap: 0.6rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: up 0.8s 0.6s forwards;
-  }
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.42rem;
-    padding: 0.4rem 0.95rem;
-    border: 1px solid rgba(58,138,94,0.35);
-    background: rgba(58,138,94,0.08);
-    color: var(--forest-faint);
-    font-size: 0.69rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-family: var(--font-mono);
-  }
-  .pill-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--forest-pale); flex-shrink: 0; }
-
-  /* scroll cue */
-  .scroll-cue {
-    position: absolute;
-    bottom: 2.2rem; left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.45rem;
-    opacity: 0;
-    animation: up 1s 1.2s forwards;
-    z-index: 2;
-  }
-  .scroll-cue span {
-    font-family: var(--font-mono);
-    font-size: 0.56rem;
-    letter-spacing: 0.2em;
-    color: rgba(248,247,243,0.28);
-    text-transform: uppercase;
-  }
-  .scroll-arrow {
-    width: 1px; height: 38px;
-    background: linear-gradient(to bottom, rgba(58,138,94,0.55), transparent);
-    animation: drip 1.7s ease-in-out infinite;
-  }
-  @keyframes drip {
-    0%,100% { transform: scaleY(1); opacity: 0.55; }
-    50%      { transform: scaleY(0.35); opacity: 0.15; }
-  }
-
-  @keyframes up {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── MARQUEE ── */
-  .marquee-wrap {
-    background: var(--off-white);
-    border-top: 1px solid var(--border-strong);
-    border-bottom: 1px solid var(--border-strong);
-    padding: 0.8rem 0;
-    overflow: hidden;
-  }
-  .marquee-track {
-    display: flex;
-    white-space: nowrap;
-    animation: ticker 28s linear infinite;
-  }
-  .m-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 1.4rem;
-    padding: 0 1.8rem;
-    font-family: var(--font-display);
-    font-size: 0.86rem;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-  }
-  .m-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--forest-pale); flex-shrink: 0; }
-  @keyframes ticker {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-
-  /* ── HOW IT WORKS ── */
-  .how-section {
-    background: var(--off-white);
-    padding: 7rem 3rem;
-  }
-  .how-inner { max-width: 1080px; margin: 0 auto; }
-
-  .section-label {
-    font-family: var(--font-mono);
-    font-size: 0.61rem;
-    letter-spacing: 0.24em;
-    color: var(--forest-pale);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-  }
-  .section-label::before {
-    content: '';
-    display: block;
-    width: 20px; height: 1px;
-    background: var(--forest-pale);
-  }
-
-  .section-heading {
-    font-family: var(--font-display);
-    font-size: clamp(2.6rem, 5.5vw, 4.8rem);
-    line-height: 0.94;
-    letter-spacing: 0.02em;
+  .signup-intro h2 {
+    font-family: var(--font-body);
+    font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+    font-weight: 500;
     color: var(--text);
-    margin-bottom: 0.6rem;
+    line-height: 1.3;
+    margin-bottom: 0.65rem;
+    letter-spacing: -0.02em;
   }
-  .section-sub {
-    font-size: 0.92rem;
+  .signup-intro p {
+    font-size: 0.95rem;
     color: var(--text-light);
-    max-width: 420px;
-    margin-bottom: 0;
+    max-width: 560px;
     line-height: 1.7;
   }
 
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border-strong);
-    border: 1px solid var(--border-strong);
-    margin-top: 3.5rem;
+  /* ── FORM SECTION TITLE (above email input) ── */
+  .form-section-title {
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-bottom: 0.7rem;
+    margin-top: 0;
+    line-height: 1.4;
   }
-  .step {
-    background: var(--off-white);
-    padding: 2.6rem 2.2rem;
-    position: relative;
-    transition: background 0.22s;
+  .booker .form-section-title { color: var(--text); }
+  .dj .form-section-title     { color: var(--white); }
+
+  /* ── BOOKER SUBHEADING under headline ── */
+  .panel-subheading {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
   }
-  .step:hover { background: var(--white); }
-  .step-num {
-    font-family: var(--font-display);
-    font-size: 5rem;
-    color: rgba(26,58,42,0.05);
-    line-height: 1;
-    position: absolute;
-    top: 1.2rem; right: 1.6rem;
-  }
-  .step-icon { font-size: 1.6rem; margin-bottom: 1.3rem; }
-  .step-title {
-    font-family: var(--font-display);
-    font-size: 1.7rem;
-    letter-spacing: 0.04em;
-    color: var(--forest);
-    margin-bottom: 0.65rem;
-    line-height: 1.05;
-  }
-  .step-desc { color: var(--text-light); font-size: 0.87rem; line-height: 1.72; }
+  .booker .panel-subheading { color: var(--text); }
+  .dj .panel-subheading     { color: rgba(248,247,243,0.75); }
 
   /* ── SIGNUP SPLIT ── */
   .signup-split {
@@ -331,13 +140,13 @@
   .signup-panel .fs-form,
   .signup-panel > form { flex: 1; display: flex; flex-direction: column; }
   .signup-panel.booker {
-    background: var(--white);
+    background: var(--card);
     color: var(--text);
   }
   .signup-panel.dj {
-    background: var(--forest-deep);
+    background: linear-gradient(160deg, var(--forest-deep) 0%, var(--forest-mid) 100%);
     color: var(--white);
-    border-left: 1px solid rgba(255,255,255,0.06);
+    border-left: 1px solid rgba(255,255,255,0.05);
   }
 
   .panel-tag {
@@ -350,8 +159,8 @@
     align-items: center;
     gap: 0.6rem;
   }
-  .booker .panel-tag { color: var(--forest-pale); }
-  .dj .panel-tag     { color: var(--forest-faint); }
+  .booker .panel-tag { color: var(--accent); }
+  .dj .panel-tag     { color: rgba(63,175,122,0.7); }
   .panel-tag::before { content: ''; display: block; width: 16px; height: 1px; background: currentColor; }
 
   .panel-heading {
@@ -361,9 +170,9 @@
     letter-spacing: 0.02em;
     margin-bottom: 1rem;
   }
-  .booker .panel-heading { color: var(--forest); }
+  .booker .panel-heading { color: var(--text); }
   .dj .panel-heading     { color: var(--white); }
-  .panel-heading em { font-style: normal; color: var(--forest-pale); }
+  .panel-heading em { font-style: normal; color: var(--accent); }
 
   .panel-sub {
     font-size: 0.9rem;
@@ -386,11 +195,11 @@
     gap: 0.65rem;
     font-size: 0.86rem;
   }
-  .booker .benefit-list li { color: var(--text-light); }
+  .booker .benefit-list li { color: rgba(26,26,26,0.6); }
   .dj .benefit-list li     { color: rgba(248,247,243,0.65); }
   .benefit-list li::before { content: '→'; flex-shrink: 0; font-weight: 700; }
-  .booker .benefit-list li::before { color: var(--forest-mid); }
-  .dj .benefit-list li::before     { color: var(--forest-pale); }
+  .booker .benefit-list li::before { color: var(--accent); }
+  .dj .benefit-list li::before     { color: var(--accent); }
 
   /* ── FORMSPREE FORM ── */
   .fs-form {
@@ -426,10 +235,11 @@
     color: var(--text);
     border: 1px solid var(--border-strong);
     border-bottom: none;
+    border-radius: 0;
   }
   .booker .fs-input:last-of-type { border-bottom: 1px solid var(--border-strong); }
   .booker .fs-input::placeholder  { color: var(--muted); }
-  .booker .fs-input:focus         { box-shadow: inset 0 0 0 2px var(--forest-pale); }
+  .booker .fs-input:focus         { box-shadow: inset 0 0 0 2px var(--accent); }
 
   .dj .fs-input {
     background: rgba(255,255,255,0.07);
@@ -439,7 +249,7 @@
   }
   .dj .fs-input:last-of-type { border-bottom: 1px solid rgba(248,247,243,0.14); }
   .dj .fs-input::placeholder  { color: rgba(248,247,243,0.27); }
-  .dj .fs-input:focus         { box-shadow: inset 0 0 0 1px rgba(58,138,94,0.55); }
+  .dj .fs-input:focus         { box-shadow: inset 0 0 0 1px rgba(63,175,122,0.6); }
 
   /* optional field label */
   .fs-optional-label {
@@ -456,20 +266,22 @@
   .fs-btn {
     width: 100%;
     margin-top: auto;
-    padding: 1rem 1.5rem;
+    padding: 1.05rem 1.5rem;
     font-family: var(--font-body);
     font-weight: 500;
     font-size: 0.8rem;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     border: none;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background 0.2s, opacity 0.2s;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 2px 12px rgba(63,175,122,0.25);
   }
-  .booker .fs-btn { background: var(--forest); color: var(--white); }
-  .booker .fs-btn:hover { background: var(--forest-mid); }
-  .dj .fs-btn     { background: var(--forest-pale); color: var(--white); }
-  .dj .fs-btn:hover { background: var(--forest-light); }
+  .booker .fs-btn { background: var(--accent); color: #ffffff; }
+  .booker .fs-btn:hover { background: var(--accent-hover); box-shadow: 0 4px 18px rgba(63,175,122,0.35); }
+  .dj .fs-btn     { background: var(--accent); color: #ffffff; }
+  .dj .fs-btn:hover { background: var(--accent-hover); box-shadow: 0 4px 18px rgba(63,175,122,0.35); }
 
   .fs-note {
     font-size: 0.68rem;
@@ -535,9 +347,9 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     line-height: 1.6;
-    background: rgba(58,138,94,0.1);
-    color: var(--forest-pale);
-    border: 1px solid rgba(58,138,94,0.28);
+    background: rgba(63,175,122,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(63,175,122,0.3);
   }
   .dj-error-banner {
     font-family: var(--font-mono);
@@ -620,13 +432,13 @@
     color: var(--muted);
   }
   .booker .pill-choice:hover {
-    border-color: var(--forest);
-    color: var(--forest);
+    border-color: var(--accent);
+    color: var(--accent);
   }
   .booker input[type="checkbox"]:checked + .pill-choice {
-    background: var(--forest);
-    border-color: var(--forest);
-    color: var(--white);
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
   }
   /* DJ pills — dark panel */
   .dj .pill-choice {
@@ -636,19 +448,19 @@
     color: rgba(248,247,243,0.45);
   }
   .dj .pill-choice:hover {
-    border-color: var(--forest-pale);
-    color: var(--forest-pale);
+    border-color: var(--accent);
+    color: var(--accent);
   }
   .dj input[type="checkbox"]:checked + .pill-choice {
-    background: var(--forest-pale);
-    border-color: var(--forest-pale);
-    color: var(--white);
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
   }
 
   /* ── FOOTER ── */
   footer {
-    background: var(--forest-deep);
-    border-top: 1px solid rgba(255,255,255,0.05);
+    background: #0a2420;
+    border-top: 1px solid rgba(255,255,255,0.07);
     padding: 2rem 3rem;
     display: flex;
     align-items: center;
@@ -656,22 +468,16 @@
     flex-wrap: wrap;
     gap: 1rem;
   }
-  .footer-logo { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.1em; color: var(--forest-pale); }
+  .footer-logo { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.1em; color: var(--accent); }
   .footer-copy { font-size: 0.68rem; color: rgba(248,247,243,0.22); letter-spacing: 0.06em; }
   .footer-legal { display: flex; gap: 1.8rem; }
   .footer-legal a { font-size: 0.68rem; color: rgba(248,247,243,0.22); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; }
   .footer-legal a:hover { color: rgba(248,247,243,0.55); }
 
-  /* ── REVEAL ── */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
     nav { padding: 1.1rem 1.4rem; }
-    .hero { padding: 8rem 1.5rem 5.5rem; }
-    .how-section { padding: 5rem 1.5rem; }
-    .steps { grid-template-columns: 1fr; }
     .signup-split { grid-template-columns: 1fr; }
     .signup-panel { padding: 4rem 2rem; }
     .signup-panel.dj { border-left: none; border-top: 1px solid rgba(255,255,255,0.06); }
@@ -685,41 +491,19 @@
 </head>
 <body>
 
+
+
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">FIND ME A DJ</a>
   <span class="nav-pill">Launching Soon — Join the Waitlist</span>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="visualizer" id="viz" aria-hidden="true"></div>
-
-  <div class="hero-content">
-    <p class="hero-eyebrow">DJ Booking — Done Properly</p>
-
-    <h1 class="hero-headline">
-      STOP<br>ASKING<br>AROUND.
-    </h1>
-
-    <p class="hero-sub">
-      Find Me a DJ connects you with trusted, vetted DJs across the UK — with upfront pricing, real mixes to preview, and a booking process that actually works.
-    </p>
-
-    <div class="hero-pills">
-      <span class="pill"><span class="pill-dot"></span>Book in minutes</span>
-      <span class="pill"><span class="pill-dot"></span>Every DJ vetted</span>
-      <span class="pill"><span class="pill-dot"></span>Price shown upfront</span>
-    </div>
-  </div>
-
-  <div class="scroll-cue">
-    <span>Register below</span>
-    <div class="scroll-arrow"></div>
-  </div>
-</section>
-
+<!-- SIGNUP INTRO -->
+<div class="signup-intro">
+  <h2>Find the right DJ for your event — <span style="color:var(--accent)">without the hassle</span></h2>
+  <p>Browse local DJs, listen to their mixes, compare prices and book with confidence — all in one place.</p>
+</div>
 
 <!-- SIGNUP SPLIT -->
 <div class="signup-split" id="signup">
@@ -729,8 +513,10 @@
     <div class="panel-tag">I need to book a DJ</div>
 
     <h2 class="panel-heading">
-      YOUR NIGHT<br>DESERVES A<br><em style="color:var(--forest-pale)">GREAT DJ.</em>
+      COMPARE DJS.<br>FIND YOUR<br><em style="color:var(--accent)">PERFECT FIT.</em>
     </h2>
+
+    <p class="panel-subheading">Discover local DJs, explore their mixes, see upfront pricing and choose with confidence.</p>
 
     <p class="panel-sub">
       We're launching soon. Get early access and be first to search our roster of vetted DJs — from wedding sets to club residencies, across the whole of the UK.
@@ -745,6 +531,8 @@
     <!-- ── BOOKER FORM — @formspree/ajax (Vanilla JS CDN) ──
          Endpoint: https://formspree.io/f/xwvwapgy (Bookers Waitlist)
     -->
+
+    <h3 class="form-section-title">Get early access to DJs near you</h3>
 
     <!-- Success banner — shown by the library on successful submission -->
     <div data-fs-success class="booker-success-msg">
@@ -795,8 +583,10 @@
     <div class="panel-tag">I'm a DJ looking for gigs</div>
 
     <h2 class="panel-heading">
-      MORE GIGS.<br>LESS<br><em style="color:var(--forest-faint)">CHASING.</em>
+      MORE GIGS.<br>LESS<br><em style="color:var(--accent)">CHASING.</em>
     </h2>
+
+    <p class="panel-subheading">Create your profile, set your rates, and get discovered by people actively looking to book.</p>
 
     <p class="panel-sub">
       Tired of relying on word of mouth? Register now and be among the first DJs on the platform when we launch — with a profile that puts you in front of bookers who are actively searching.
@@ -811,6 +601,8 @@
     <!-- ── DJ FORM — @formspree/ajax (Vanilla JS CDN) ──
          Endpoint: https://formspree.io/f/xkopkgdp (DJs Waitlist)
     -->
+
+    <h3 class="form-section-title">Join as a DJ and start getting booked</h3>
 
     <!-- Success banner — shown by the library on successful submission -->
     <div data-fs-success class="dj-success-msg">
@@ -858,65 +650,6 @@
 
 </div><!-- /signup-split -->
 
-<!-- MARQUEE -->
-<div class="marquee-wrap" aria-hidden="true">
-  <div class="marquee-track">
-    <span class="m-item"><span class="m-dot"></span>HOUSE</span>
-    <span class="m-item"><span class="m-dot"></span>TECHNO</span>
-    <span class="m-item"><span class="m-dot"></span>AFROBEATS</span>
-    <span class="m-item"><span class="m-dot"></span>DRUM & BASS</span>
-    <span class="m-item"><span class="m-dot"></span>DISCO</span>
-    <span class="m-item"><span class="m-dot"></span>FUNK & SOUL</span>
-    <span class="m-item"><span class="m-dot"></span>JUNGLE</span>
-    <span class="m-item"><span class="m-dot"></span>GARAGE</span>
-    <span class="m-item"><span class="m-dot"></span>AMAPIANO</span>
-    <span class="m-item"><span class="m-dot"></span>JAZZ</span>
-    <span class="m-item"><span class="m-dot"></span>R&B</span>
-    <span class="m-item"><span class="m-dot"></span>BREAKS</span>
-    <span class="m-item"><span class="m-dot"></span>HOUSE</span>
-    <span class="m-item"><span class="m-dot"></span>TECHNO</span>
-    <span class="m-item"><span class="m-dot"></span>AFROBEATS</span>
-    <span class="m-item"><span class="m-dot"></span>DRUM & BASS</span>
-    <span class="m-item"><span class="m-dot"></span>DISCO</span>
-    <span class="m-item"><span class="m-dot"></span>FUNK & SOUL</span>
-    <span class="m-item"><span class="m-dot"></span>JUNGLE</span>
-    <span class="m-item"><span class="m-dot"></span>GARAGE</span>
-    <span class="m-item"><span class="m-dot"></span>AMAPIANO</span>
-    <span class="m-item"><span class="m-dot"></span>JAZZ</span>
-    <span class="m-item"><span class="m-dot"></span>R&B</span>
-    <span class="m-item"><span class="m-dot"></span>BREAKS</span>
-  </div>
-</div>
-
-<!-- HOW IT WORKS -->
-<section class="how-section">
-  <div class="how-inner">
-    <div class="section-label reveal">No guesswork, no chasing</div>
-    <h2 class="section-heading reveal">THREE STEPS.<br>ONE GREAT NIGHT.</h2>
-    <p class="section-sub reveal">We've stripped out the friction that makes booking a DJ harder than it should be.</p>
-    <div class="steps">
-      <div class="step reveal">
-        <div class="step-num">01</div>
-        <div class="step-icon">🔍</div>
-        <h3 class="step-title">SEARCH</h3>
-        <p class="step-desc">Filter by genre, location, and budget. Every DJ shows their rates upfront — no back-and-forth, no "drop me a DM for pricing."</p>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">02</div>
-        <div class="step-icon">📩</div>
-        <h3 class="step-title">BOOK</h3>
-        <p class="step-desc">Send a request, get a confirmed booking. Your payment is held securely until the event is done — you're covered if anything changes.</p>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">03</div>
-        <div class="step-icon">🔊</div>
-        <h3 class="step-title">DONE.</h3>
-        <p class="step-desc">Your DJ shows up, plays the set, crowd is happy. Funds release automatically. No invoices to chase, no awkward cash conversations.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">FIND ME A DJ</div>
@@ -929,25 +662,8 @@
 </footer>
 
 <script>
-  /* EQ bars */
-  const viz = document.getElementById('viz');
-  for (let i = 0; i < 90; i++) {
-    const b = document.createElement('div');
-    b.className = 'bar';
-    b.style.cssText = `height:${Math.random()*120+16}px;--d:${(Math.random()*0.9+0.6).toFixed(2)}s;animation-delay:-${(Math.random()*1.8).toFixed(2)}s`;
-    viz.appendChild(b);
-  }
 
-  /* Scroll reveals */
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 50);
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
 
   /* ── Booker form: @formspree/ajax (CDN) ──
      Initialised below the CDN <script> tag via the global formspree() queue.
